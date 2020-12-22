@@ -14,14 +14,14 @@ public class Application {
     public static void main(String[] args) {
         List<Shape> shapes = new ArrayList<>();
 
-        shapes.add(new Circle(5));
-        shapes.add(new Circle(2));
-        shapes.add(new Square(5));
-        shapes.add(new Square(7));
-        shapes.add(new Rectangle(2, 3));
-        shapes.add(new Rectangle(5, 4));
-        shapes.add(new Triangle(3, 4, 5));
-        shapes.add(new Triangle(2, 2, 3));
+        shapes.add(new Circle(6));
+        shapes.add(new Circle(3));
+        shapes.add(new Square(6));
+        shapes.add(new Square(9));
+        shapes.add(new Rectangle(3, 4));
+        shapes.add(new Rectangle(6, 3));
+        shapes.add(new Triangle(4, 5, 6));
+        shapes.add(new Triangle(2, 1, 2));
 
         double S = shapes.stream().mapToDouble(Shape::calcArea).sum();
         out.println("Total square: " + S);
