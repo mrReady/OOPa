@@ -20,17 +20,17 @@ public class View extends JFrame implements MinerView, ActionListener {
 
         setResizable(true);
 
-        Canvas canvas = new Canvas();
-        canvas.setBackground(Color.black);
-        add(BorderLayout.CENTER, canvas);
-        canvas.setLayout(grid);
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.black);
+        add(BorderLayout.CENTER, panel);
+        panel.setLayout(grid);
 
         for(int j = 0; j < Model.FEILD_SIZE; j++){
             for(int i = 0; i < Model.FEILD_SIZE; i++){
                 buttons[i][j] = new JButton();
                 cel[i][j] = new Cell(j, i);
                 buttons[i][j].addActionListener(this);
-                canvas.add(buttons[i][j]);
+                panel.add(buttons[i][j]);
             }
         }
 
@@ -47,14 +47,14 @@ public class View extends JFrame implements MinerView, ActionListener {
 
     public void update(Cell cell){
         cel[cell.column][cell.row] = cell;
-        if (cell.state.equals("opened")){
+        if (cell.state.equals(s.opened)){
             if(cell.mined) {
                 buttons[cell.column][cell.row].setText("Б");
             }
             else {
                 buttons[cell.column][cell.row].setText(cell.count + "");
             }
-            if(cel[cell.column][cell.row].state.equals("opened")) {
+            if(cel[cell.column][cell.row].state.equals(s.opened)) {
                 buttons[cell.column][cell.row].setEnabled(false);
             }
         }
