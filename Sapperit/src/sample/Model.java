@@ -16,14 +16,14 @@ public class Model {
     }
 
     void openCell(int row, int column) throws NullPointerException{
-        cel[column][row].state = "opened";
+        cel[column][row].state = s.opened;
 
         if(cel[column][row].count == 0){
             for(int j = -1; j < 2; j++){
                 for(int i = -1;i < 2; i++){
                     if(i != 0 || j != 0){
                         if(!outOfBounds(column + i, row + j)){
-                            if (!cel[column + i][row + j].state.equals("opened")){
+                            if (!cel[column + i][row + j].state.equals(s.opened)){
                                 openCell(row + j, column + i);
                             }}}}}}
 
@@ -49,7 +49,7 @@ public class Model {
     private boolean isWon() {
         for(int j = 0; j < cel.length; j++){
             for(int i = 0; i < cel[0].length; i++){
-                if((cel[i][j].state.equals("closed")) && (!cel[i][j].mined)){
+                if((cel[i][j].state.equals(s.closed)) && (!cel[i][j].mined)){
                     return false;
                 }
             }
