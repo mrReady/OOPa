@@ -1,8 +1,8 @@
 package sample;
 
 public interface MinerView {
-    void update(Cell cel);
-    void gamend();
+    void update(Cell cell);
+    void gameEnd();
     void start();
-    void win();
+    void won();
 }

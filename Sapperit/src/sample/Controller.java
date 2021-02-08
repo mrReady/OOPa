@@ -1,17 +1,17 @@
 package sample;
 
 public class Controller {
-    Model mod;
+    Model model;
 
     Controller(Model mod){
-        this.mod = mod;
+        this.model = mod;
     }
 
     void openCell(int row, int column) throws NullPointerException{
-        mod.openCell(row, column);
+        model.openCell(row, column);
     }
 
     void newGame(){
-        mod.genBoard(Model.FEILD_SIZE, Model.mines);
+        model.genBoard(Model.FEILD_SIZE, Model.MINES);
     }
 }

@@ -6,13 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class View extends JFrame implements MinerView, ActionListener {
-    Cell[][] cel = new Cell[Model.FEILD_SIZE][Model.FEILD_SIZE];
+    Cell[][] cell = new Cell[Model.FEILD_SIZE][Model.FEILD_SIZE];
     JButton[][] buttons = new JButton[Model.FEILD_SIZE][Model.FEILD_SIZE];
     Controller controller;
     GridLayout grid = new GridLayout(Model.FEILD_SIZE, Model.FEILD_SIZE);
 
-    View (Model mod){
-        controller = new Controller(mod);
+    View (Model model){
+        controller = new Controller(model);
 
         setTitle("Сапёр");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -25,10 +25,10 @@ public class View extends JFrame implements MinerView, ActionListener {
         add(BorderLayout.CENTER, panel);
         panel.setLayout(grid);
 
-        for(int j = 0; j < Model.FEILD_SIZE; j++){
-            for(int i = 0; i < Model.FEILD_SIZE; i++){
+        for (int j = 0; j < Model.FEILD_SIZE; j++){
+            for (int i = 0; i < Model.FEILD_SIZE; i++){
                 buttons[i][j] = new JButton();
-                cel[i][j] = new Cell(j, i);
+                cell[i][j] = new Cell(j, i);
                 buttons[i][j].addActionListener(this);
                 panel.add(buttons[i][j]);
             }
@@ -45,29 +45,27 @@ public class View extends JFrame implements MinerView, ActionListener {
         setVisible(true);
     }
 
-    public void update(Cell cell){
-        cel[cell.column][cell.row] = cell;
-        if (cell.state.equals(s.opened)){
-            if(cell.mined) {
-                buttons[cell.column][cell.row].setText("Б");
+    public void update(Cell cells){
+        cell[cells.column][cells.row] = cells;
+        if (cells.state.equals(s.opened)){
+            if (cells.mined) {
+                buttons[cells.column][cells.row].setText("Б");
+            } else {
+                buttons[cells.column][cells.row].setText(cells.count + "");
             }
-            else {
-                buttons[cell.column][cell.row].setText(cell.count + "");
-            }
-            if(cel[cell.column][cell.row].state.equals(s.opened)) {
-                buttons[cell.column][cell.row].setEnabled(false);
+            if (cell[cells.column][cells.row].state.equals(s.opened)) {
+                buttons[cells.column][cells.row].setEnabled(false);
             }
         }
     }
 
 
-    @Override
-    public void gamend(){
+    @Override public void gameEnd(){
         this.setTitle("Конец игры");
 
-        for(int j = 0; j < buttons.length; j++){
-            for(int i = 0; i < buttons.length; i++) {
-                if (cel[i][j].mined) {
+        for (int j = 0; j < buttons.length; j++){
+            for (int i = 0; i < buttons.length; i++) {
+                if (cell[i][j].mined) {
                     buttons[i][j].setBackground(Color.RED);
                     buttons[i][j].setText("Б");
                 }
@@ -77,10 +75,9 @@ public class View extends JFrame implements MinerView, ActionListener {
         JOptionPane.showMessageDialog(this, "Конец игры");
     }
 
-    @Override
-    public void start(){
+    @Override public void start(){
         this.setTitle("Игра в процессе");
-        for(int j = 0; j < buttons.length; j++){
+        for (int j = 0; j < buttons.length; j++){
             for (int i = 0; i < buttons[0].length; i++){
                 buttons[i][j].setEnabled(true);
                 buttons[i][j].setText("");
@@ -90,13 +87,12 @@ public class View extends JFrame implements MinerView, ActionListener {
         }
     }
 
-    @Override
-    public void win(){
+    @Override public void won(){
         this.setTitle("Сапёр");
-        for(int j = 0; j < buttons.length; j++){
-            for(int i = 0; i < buttons[0].length; i++){
+        for (int j = 0; j < buttons.length; j++){
+            for (int i = 0; i < buttons[0].length; i++){
                 buttons[i][j].setEnabled(false);
-                if(cel[i][j].mined){
+                if (cell[i][j].mined){
                     buttons[i][j].setText("Б");
                     buttons[i][j].setBackground(Color.blue);
                 }
@@ -111,21 +107,20 @@ public class View extends JFrame implements MinerView, ActionListener {
             controller.newGame();
         }
 
-        for(int j = 0; j < buttons[0].length; j++){
+        for (int j = 0; j < buttons[0].length; j++){
             for (int i = 0; i < buttons.length; i++){
-                if(e.getSource().equals(buttons[i][j])){
-                    try{
+                if (e.getSource().equals(buttons[i][j])){
+                    try {
                         controller.openCell(j, i);
                     }
                     catch (NullPointerException w){
                         JOptionPane.showMessageDialog(this,"Игра не начата");
                     }
-                    if (cel[i][j].mined){
+                    if (cell[i][j].mined){
                         buttons[i][j].setForeground(Color.RED);
                         buttons[i][j].setText("Б");
-                    }
-                    else {
-                        buttons[i][j].setText(cel[i][j].count + "");
+                    } else {
+                        buttons[i][j].setText(cell[i][j].count + "");
                     }
                     buttons[i][j].setEnabled(false);
                 }

@@ -1,14 +1,14 @@
 package sample;
 
-enum s{closed,opened;}
+enum s { closed, opened }
 
 public class Cell {
-    int row, column;
-    s state;
+    int     row, column;
+    s       state;
     boolean mined;
-    int count;
+    int     count;
 
-    Cell(int row, int column){
+    Cell (int row, int column){
         mined = false;
         count = 0;
         state = s.closed;
