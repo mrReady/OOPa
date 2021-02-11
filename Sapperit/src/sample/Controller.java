@@ -14,4 +14,8 @@ public class Controller {
     void newGame(){
         model.genBoard(Model.FEILD_SIZE, Model.MINES);
     }
+
+    void flagCell(int row, int column) throws NullPointerException{
+        model.flagCell(row, column);
+    }
 }
