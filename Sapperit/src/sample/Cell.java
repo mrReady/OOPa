@@ -1,6 +1,6 @@
 package sample;
 
-enum s { closed, opened }
+enum s { closed, opened, flag }
 
 public class Cell {
     int     row, column;

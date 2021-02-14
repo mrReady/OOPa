@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Model {
 
-    static final int FEILD_SIZE = 10;
-    static final int MINES = 7;
+    static final int FEILD_SIZE = 16; //max 23
+    static final int MINES = 10; // max FEILD_SIZE^2 / 8
 
     Cell[][] cell;
     ArrayList<MinerView> listener = new ArrayList<>();
@@ -19,7 +19,7 @@ public class Model {
 
         if (cell[column][row].count == 0){
             for (int j = -1; j < 2; j++){
-                for (int i = -1;i < 2; i++){
+                for (int i = -1; i < 2; i++){
                     if (i != 0 || j != 0){
                         if (!outOfBounds(column + i, row + j)){
                             if (!cell[column + i][row + j].state.equals(s.opened)){
@@ -102,8 +102,8 @@ public class Model {
                     } else {
                         cell[row + i][column + j].count++;
                     }
-                   for(MinerView vi : listener){
-                        vi.update(cell[row + i][column + j]);
+                   for(MinerView view : listener){
+                        view.update(cell[row + i][column + j]);
                    }
                 }
             }
@@ -117,6 +117,16 @@ public class Model {
         }
         catch (IndexOutOfBoundsException e){
             return true;
+        }
+    }
+
+    public void flagCell(int row, int column)throws NullPointerException{
+        if (cell[column][row].state.equals(s.closed)) {
+            cell[column][row].state = s.flag;
+        } else {
+            if (cell[column][row].state.equals(s.flag)) {
+                cell[column][row].state = s.closed;
+            }
         }
     }
 }
