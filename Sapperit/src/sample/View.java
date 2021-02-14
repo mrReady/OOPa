@@ -23,30 +23,7 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
         panel.setBackground(Color.black);
         add(BorderLayout.CENTER, panel);
         panel.setLayout(grid);
-/*
-        panel.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    for (int j = 0; j < buttons[0].length; j++) {
-                        for (int i = 0; i < buttons.length; i++) {
-                            if (e.getSource().equals(buttons[i][j])) {
-                                try {
-                                    controller.flagCell(j, i);
-                                    if (cell[i][j].state.equals(s.flag)) {
-                                        buttons[i][j].setText("Ф");
-                                    } else {
-                                        buttons[i][j].setText("");
-                                    }
-                                } catch (NullPointerException w) {
-                                    //JOptionPane.showMessageDialog(this,"Игра не начата");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-*/
+
         for (int j = 0; j < Model.FEILD_SIZE; j++){
             for (int i = 0; i < Model.FEILD_SIZE; i++){
                 buttons[i][j] = new JButton();
@@ -69,15 +46,13 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
 
     public void update(Cell cells){
         cell[cells.column][cells.row] = cells;
-        if (cells.state.equals(s.opened)){
+        if (cells.state.equals(s.opened)) {
             if (cells.mined) {
                 buttons[cells.column][cells.row].setText("Б");
             } else {
                 buttons[cells.column][cells.row].setText(cells.count + "");
             }
-            if (cell[cells.column][cells.row].state.equals(s.opened)) {
-                buttons[cells.column][cells.row].setEnabled(false);
-            }
+            buttons[cells.column][cells.row].setEnabled(false);
         }
     }
 
@@ -122,48 +97,18 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
         JOptionPane.showMessageDialog(this, "Победа!!!");
     }
 
-    /*@Override
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource().equals(this.getJMenuBar().getMenu(0).getItem(0))){
-            controller.newGame();
-        }
-
-        for (int j = 0; j < buttons[0].length; j++){
-            for (int i = 0; i < buttons.length; i++){
-                if (e.getSource().equals(buttons[i][j])){
-                    try {
-                        if (!cell[i][j].state.equals(s.flag)){
-                            controller.openCell(j, i);
-                        }
-                    }
-                    catch (NullPointerException w){
-                        JOptionPane.showMessageDialog(this,"Игра не начата");
-                    }
-                    if (cell[i][j].mined){
-                        buttons[i][j].setForeground(Color.RED);
-                        buttons[i][j].setText("Б");
-                    } else {
-                        buttons[i][j].setText(cell[i][j].count + "");
-                    }
-                    buttons[i][j].setEnabled(false);
-                }
-            }
-        }
-    }*/
-
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) {
             for (int j = 0; j < buttons[0].length; j++) {
                 for (int i = 0; i < buttons.length; i++) {
-                    if (e.getSource().equals(buttons[i][j]) && cell[i][j].state.equals(s.closed)) {
+                    if (e.getSource().equals(buttons[i][j]) && !cell[i][j].state.equals(s.opened)) {
                         try {
                             controller.flagCell(j, i);
                             if (cell[i][j].state.equals(s.flag)) {
-                                buttons[i][j].setEnabled(false);
-                                buttons[i][j].setForeground(Color.green);
-                                buttons[i][j].setText("М");
+                                buttons[i][j].setBackground(Color.green);
+                                buttons[i][j].setText("Ф");
                             } else {
-                                buttons[i][j].setEnabled(true);
+                                buttons[i][j].setBackground(Color.WHITE);
                                 buttons[i][j].setText("");
                             }
                         } catch (NullPointerException w) {
@@ -177,21 +122,14 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
         if (e.getButton() == MouseEvent.BUTTON1) {
             for (int j = 0; j < buttons[0].length; j++) {
                 for (int i = 0; i < buttons.length; i++) {
-                    if (!cell[i][j].state.equals(s.flag)) {
-                        if (e.getSource().equals(buttons[i][j])) {
-                            try {
+                    if (e.getSource().equals(buttons[i][j])) {
+                        try {
+                            if (!cell[i][j].state.equals(s.flag)) {
                                 controller.openCell(j, i);
-                            } catch (NullPointerException w) {
-                                JOptionPane.showMessageDialog(this, "Игра не начата");
                             }
+                        } catch (NullPointerException w) {
+                            JOptionPane.showMessageDialog(this, "Игра не начата");
                         }
-                        if (cell[i][j].mined) {
-                            buttons[i][j].setForeground(Color.RED);
-                            buttons[i][j].setText("Б");
-                        } else {
-                            buttons[i][j].setText(cell[i][j].count + "");
-                        }
-                        buttons[i][j].setEnabled(false);
                     }
                 }
             }

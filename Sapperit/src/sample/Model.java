@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Model {
 
     static final int FEILD_SIZE = 16; //max 23
-    static final int MINES = 40; // max FEILD_SIZE^2 / 8
+    static final int MINES = 10; // max FEILD_SIZE^2 / 8
 
     Cell[][] cell;
     ArrayList<MinerView> listener = new ArrayList<>();
@@ -127,9 +127,6 @@ public class Model {
             if (cell[column][row].state.equals(s.flag)) {
                 cell[column][row].state = s.closed;
             }
-        }
-        for (MinerView view : listener){
-            view.update(cell[column][row]);
         }
     }
 }
