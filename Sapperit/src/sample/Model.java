@@ -102,8 +102,8 @@ public class Model {
                     } else {
                         cell[row + i][column + j].count++;
                     }
-                   for(MinerView vi : listener){
-                        vi.update(cell[row + i][column + j]);
+                   for(MinerView view : listener){
+                        view.update(cell[row + i][column + j]);
                    }
                 }
             }
@@ -123,9 +123,10 @@ public class Model {
     public void flagCell(int row, int column)throws NullPointerException{
         if (cell[column][row].state.equals(s.closed)) {
             cell[column][row].state = s.flag;
-        }
-        if (cell[column][row].state.equals(s.flag)){
-            cell[column][row].state = s.closed;
+        } else {
+            if (cell[column][row].state.equals(s.flag)) {
+                cell[column][row].state = s.closed;
+            }
         }
         for (MinerView view : listener){
             view.update(cell[column][row]);

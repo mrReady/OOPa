@@ -79,14 +79,7 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
                 buttons[cells.column][cells.row].setEnabled(false);
             }
         }
-        if (cells.state.equals(s.flag)){
-            buttons[cells.column][cells.row].setEnabled(false);
-        }
-        if (cells.state.equals(s.closed)){
-            buttons[cells.column][cells.row].setEnabled(true);
-        }
     }
-
 
     @Override public void gameEnd(){
         this.setTitle("Конец игры");
@@ -165,10 +158,12 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
                     if (e.getSource().equals(buttons[i][j]) && cell[i][j].state.equals(s.closed)) {
                         try {
                             controller.flagCell(j, i);
-                            if (cell[i][j].state.equals(s.closed)) {
+                            if (cell[i][j].state.equals(s.flag)) {
+                                buttons[i][j].setEnabled(false);
                                 buttons[i][j].setForeground(Color.green);
                                 buttons[i][j].setText("М");
                             } else {
+                                buttons[i][j].setEnabled(true);
                                 buttons[i][j].setText("");
                             }
                         } catch (NullPointerException w) {
