@@ -6,10 +6,10 @@ import java.awt.event.*;
 
 
 public class View extends JFrame implements MinerView, MouseListener, ActionListener {
-    Cell[][] cell = new Cell[Model.FEILD_SIZE][Model.FEILD_SIZE];
-    JButton[][] buttons = new JButton[Model.FEILD_SIZE][Model.FEILD_SIZE];
+    Cell[][] cell = new Cell[Model.fei][Model.fei];
+    JButton[][] buttons = new JButton[Model.fei][Model.fei];
     Controller controller;
-    GridLayout grid = new GridLayout(Model.FEILD_SIZE, Model.FEILD_SIZE);
+    GridLayout grid = new GridLayout(Model.fei, Model.fei);
 
     View (Model model){
         controller = new Controller(model);
@@ -24,8 +24,8 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
         add(BorderLayout.CENTER, panel);
         panel.setLayout(grid);
 
-        for (int j = 0; j < Model.FEILD_SIZE; j++){
-            for (int i = 0; i < Model.FEILD_SIZE; i++){
+        for (int j = 0; j < model.fei; j++){
+            for (int i = 0; i < model.fei; i++){
                 buttons[i][j] = new JButton();
                 cell[i][j] = new Cell(j, i);
                 buttons[i][j].addMouseListener(this);
@@ -108,7 +108,7 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
                                 buttons[i][j].setBackground(Color.green);
                                 buttons[i][j].setText("Ф");
                             } else {
-                                buttons[i][j].setBackground(Color.WHITE);
+                                buttons[i][j].setBackground((new JButton()).getBackground());
                                 buttons[i][j].setText("");
                             }
                         } catch (NullPointerException w) {
@@ -151,7 +151,7 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(this.getJMenuBar().getMenu(0).getItem(0))) {
-            controller.newGame();
+            controller.newGame(Model.fei, Model.min);
         }
     }
 }
