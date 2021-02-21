@@ -1,11 +1,13 @@
 package sample;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 
 
-public class View extends JFrame implements MinerView, MouseListener, ActionListener {
+public class View extends JFrame implements MinerView, MouseListener, ActionListener, KeyListener {
     Cell[][] cell = new Cell[Model.fei][Model.fei];
     JButton[][] buttons = new JButton[Model.fei][Model.fei];
     Controller controller;
@@ -153,5 +155,37 @@ public class View extends JFrame implements MinerView, MouseListener, ActionList
         if (e.getSource().equals(this.getJMenuBar().getMenu(0).getItem(0))) {
             controller.newGame(Model.fei, Model.min);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            //Border thickBorder = new LineBorder(Color.RED, 12);
+            for (int j = 0; j < buttons[0].length; j++) {
+                for (int i = 0; i < buttons.length; i++) {
+                    if (cell[i][j].mined) {
+                        buttons[i][j].setBorder(BorderFactory.createLineBorder(Color.red, 5));
+                        //buttons[i][j].setBorder(BorderFactory.createLineBorder(Color.RED));
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+       /* if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            for (int j = 0; j < buttons[0].length; j++) {
+                for (int i = 0; i < buttons.length; i++) {
+                    if (cell[i][j].mined) {
+                        buttons[i][j].setBorder(new LineBorder(Color.black));
+                    }
+                }
+            }
+        }*/
     }
 }
